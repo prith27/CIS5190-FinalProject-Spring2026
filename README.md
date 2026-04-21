@@ -1,0 +1,70 @@
+# CIS 5190 — Img2GPS (Project A)
+
+Predict **latitude and longitude** (decimal degrees) from an image. This repository holds **course submission code** (`model.py`, `preprocess.py`, `model.pt`), **documentation** for reproducibility and the final report, and pointers to **Hugging Face** artifacts.
+
+## Status
+
+| Phase | Status |
+|-------|--------|
+| A — Repo & docs | Complete |
+| B — Data & HF Dataset | TBD |
+| C — Train on AWS | TBD |
+| D — `model.py` / `preprocess.py` + local eval | TBD |
+| E — HF leaderboard | TBD |
+| F — Report & optional video | TBD |
+
+## Quick links
+
+| Resource | Location |
+|----------|----------|
+| Data protocol & HF Dataset URL | [docs/DATA.md](docs/DATA.md) |
+| AWS EC2 setup | [docs/AWS_SETUP.md](docs/AWS_SETUP.md) |
+| Commands (train, eval, upload) | [docs/RUNBOOK.md](docs/RUNBOOK.md) |
+| Experiment log | [docs/RESULTS.md](docs/RESULTS.md) |
+| HF submission / Group ID / Alias | [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md) |
+| Grader I/O checklist | [docs/SUBMISSION_CHECKLIST.md](docs/SUBMISSION_CHECKLIST.md) |
+| Environment parity | [docs/BACKEND_ENV.md](docs/BACKEND_ENV.md) |
+| Report draft (5-page body) | [docs/REPORT_OUTLINE.md](docs/REPORT_OUTLINE.md) |
+| Phase doc audits | [docs/DOC_REVIEW.md](docs/DOC_REVIEW.md) |
+
+## Course resources (local copies)
+
+- Baseline notebook: `project-resources/Img2GPS/Release_baseline_model.ipynb` — **not in Git** (too large); keep your copy from the course zip or strip outputs and track a lean version if the team agrees.
+- EXIF → CSV: [project-resources/Img2GPS/Release_post_process.ipynb](project-resources/Img2GPS/Release_post_process.ipynb)
+- Local evaluator: [project-resources/Img2GPS/eval_project_a.py](project-resources/Img2GPS/eval_project_a.py)
+- Reference CSV: [project-resources/Img2GPS/reference/metadata.csv](project-resources/Img2GPS/reference/metadata.csv) — reference **images** are **gitignored**; add JPGs locally next to this CSV for eval.
+- Templates: [project-resources/model_template.py](project-resources/model_template.py), [project-resources/preprocess_template.py](project-resources/preprocess_template.py)
+
+## Artifacts
+
+Store exported checkpoints under **`artifacts/`** (gitignored). Record checksums in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md).
+
+## Reproduce local eval (after Phase D)
+
+From the repo root, with `model.py`, `preprocess.py`, and `model.pt` in place (e.g. `artifacts/model.pt`):
+
+```bash
+python project-resources/Img2GPS/eval_project_a.py \
+  --model model.py \
+  --preprocess preprocess.py \
+  --weights model.pt \
+  --csv path/to/val/metadata.csv
+```
+
+## Non-goals
+
+- **Inference does not read EXIF GPS** from the query image; the model predicts location from pixels only (training labels may come from EXIF or external metadata).
+
+## Team (Group ID **5**)
+
+| Name | Role (update as you divide work) |
+|------|----------------------------------|
+| **Prithvi Seshadri** | TBD |
+| **Vamsi Krishna Naghichetty Kishore Kumar** | TBD |
+| **Ishita Munshi** | TBD |
+
+Use **Group ID `5`** on Hugging Face leaderboard submissions and anywhere the course form asks for it. Details also in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md).
+
+## License / data
+
+- See [docs/DATA.md](docs/DATA.md) for dataset license and attribution.

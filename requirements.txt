@@ -1,0 +1,8 @@
+# Pin versions to match CIS 5190 Hugging Face eval backend (see Project_Submission.pdf).
+# Verify each term: course staff may update the backend list.
+numpy
+pandas
+torch==2.9.1
+torchvision
+scikit-learn
+opencv-python
