@@ -1,6 +1,6 @@
 # Submission checklist (Project A — Img2GPS)
 
-Use this before every Hugging Face upload. Source: **Project_Submission.pdf** and local **eval_project_a.py** behavior.
+Use this before every Hugging Face upload. Sources: **Project_Submission.pdf**, **CIS 4190_5190 Final Project Descriptions.pdf** (Spring 2026), and local **eval_project_a.py** behavior.
 
 ## Files to upload
 
@@ -34,6 +34,18 @@ Use this before every Hugging Face upload. Source: **Project_Submission.pdf** an
 ## Integrity
 
 - [ ] No attempt to bypass the I/O contract; TAs can read submitted source
+
+## Course baseline alignment (Final Project Descriptions §2.3)
+
+- [ ] Inputs resized to **224×224** (and normalized) in **`preprocess.py`** to match training
+- [ ] Model performance **≥ course ResNet-18 baseline** expectation (full fine-tune, MSE, Adam 1e-3, ~10–15 epochs in doc); document if you deviate
+- [ ] If targets were z-scored in training, **`predict`** still returns **raw degrees**
+
+## Training integrity
+
+- [ ] **[`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img)** is **not** in the training split (staff discourage training on it; Ed #348)
+- [ ] Train is a **deduplicated** subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) (document **seed** and **N**)
+- [ ] **Official representative test sample** from the course PDF (§2.2), if separate from above, is **not** in training
 
 ## Local sanity check
 

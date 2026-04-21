@@ -6,3 +6,6 @@ torch==2.9.1
 torchvision
 scikit-learn
 opencv-python
+datasets
+huggingface_hub
+Pillow

@@ -15,8 +15,15 @@
 
 ## Hugging Face Dataset (team data)
 
-- **Dataset URL:** TBD (required in report)
+- **Team train subset (publish this):** TBD — required in report (derived from [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset); cite parent + seed + N + dedup)
 - **Revision / commit:** TBD
+
+### Reference datasets (do not confuse with team repo)
+
+| Dataset | URL | Use for Group 5 |
+|---------|-----|-----------------|
+| Released sample / **val** | [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img) | **Validation only** (~100); **not** in training (Ed #348) |
+| Train **pool** | [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) | Subset → **your** HF train dataset after dedup |
 
 ## Artifacts
 

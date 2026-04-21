@@ -15,6 +15,8 @@ __pycache__/
 .DS_Store
 .idea/
 .vscode/
+.cursor/
+.cursor
 
 # Checkpoints (large) — track via SUBMISSION_LOG checksums; use Git LFS if you must version them
 *.pt
@@ -27,6 +29,10 @@ artifacts/*.pth
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Local dataset trees (images + metadata); document HF Dataset URL in docs instead of committing large files
+data/*
+!data/.gitkeep
 
 # Large course assets (keep locally — bloated remote / flaky pushes)
 # Baseline notebook embeds Colab outputs (~10MB+).

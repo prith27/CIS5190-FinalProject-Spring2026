@@ -2,12 +2,14 @@
 
 Predict **latitude and longitude** (decimal degrees) from an image. This repository holds **course submission code** (`model.py`, `preprocess.py`, `model.pt`), **documentation** for reproducibility and the final report, and pointers to **Hugging Face** artifacts.
 
+**Course scope (Spring 2026):** Evaluation targets **Penn campus** imagery in the **rectangle from 33rd & Walnut to 34th & Spruce** ([CIS 4190_5190 Final Project Descriptions.pdf](CIS%204190_5190%20Final%20Project%20Descriptions.pdf) §2.1). Train on a **curated** dataset aligned with that region (including **public** geo-tagged sources); see [docs/DATA.md](docs/DATA.md).
+
 ## Status
 
 | Phase | Status |
 |-------|--------|
 | A — Repo & docs | Complete |
-| B — Data & HF Dataset | TBD |
+| B — Data & HF Dataset | In progress — [docs/DATA.md](docs/DATA.md) (dedup script: `scripts/build_group5_train_dataset.py`; aug: `training/augmentation.py`; Hub URL in [SUBMISSION_LOG](docs/SUBMISSION_LOG.md) when published) |
 | C — Train on AWS | TBD |
 | D — `model.py` / `preprocess.py` + local eval | TBD |
 | E — HF leaderboard | TBD |
@@ -64,6 +66,10 @@ python project-resources/Img2GPS/eval_project_a.py \
 | **Ishita Munshi** | TBD |
 
 Use **Group ID `5`** on Hugging Face leaderboard submissions and anywhere the course form asks for it. Details also in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md).
+
+## Dataset deliverable (“do we curate?”)
+
+**Yes.** The course requires **collecting, curating, cleaning, and splitting** data you use ([Final Project Descriptions](CIS%204190_5190%20Final%20Project%20Descriptions.pdf) §1.2) and submitting **the dataset you used** (§1.5). **Curation of public imagery** (with clear protocol, license, and HF Dataset link) satisfies this; you do not have to be the photographer. Details: [docs/DATA.md](docs/DATA.md).
 
 ## License / data
 
