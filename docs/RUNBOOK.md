@@ -41,6 +41,8 @@ python scripts/build_group5_train_dataset.py --n 1500 --seed 51905 --out data/gr
 
 **First run still downloads image bytes** over the network when streaming; let the command **finish**. If you interrupt it, delete the broken output dir and run again.
 
+**Process ends with `Killed` (no Python traceback):** Usually the **Linux OOM killer** — streaming shuffle + image decode can use a lot of RAM. Try a **smaller** shuffle buffer, e.g. `python scripts/build_group5_train_dataset.py ... --shuffle-buffer-size 512`, or add **swap** on the instance (`sudo fallocate -l 8G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile`), or use an instance with **more memory**. Confirm with `dmesg -T | tail -20` (look for “Out of memory”).
+
 Dedup rule: **SHA-256 of lossless RGB PNG bytes** per image; drop any train row whose hash appears in **`gydou/released_img`**. Document counts in the script’s `build_manifest.json`.
 
 ### Push train dataset to Hugging Face Hub
@@ -48,7 +50,7 @@ Dedup rule: **SHA-256 of lossless RGB PNG bytes** per image; drop any train row 
 1. **Create the dataset repo on Hugging Face** (one-time): [https://huggingface.co/new-dataset](https://huggingface.co/new-dataset) — choose an owner (your user or org) and a name, e.g. `cis5190-group5-train`. You can start **private** and switch to public later if the license allows.
 
 2. **Authenticate** (pick one):
-   - **CLI:** `huggingface-cli login` — paste a **write** token from [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+   - **CLI:** `hf auth login` (new) — or legacy `huggingface-cli login` if your `huggingface_hub` version still supports it — paste a **write** token from [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens). If you see a deprecation notice, use **`hf`**.
    - **Env:** `export HF_TOKEN=hf_...` in the same shell before running the script.
 
 3. **Build + push in one go** (after `metadata.csv` and `images/` exist locally, or run the same command to rebuild and push):

@@ -116,14 +116,16 @@ ssh -i /path/to/your-key.pem ubuntu@<PUBLIC_DNS_OR_IP>
 ## First-time instance setup (after login)
 
 1. Clone this repository (or copy files).
-2. Create a virtual environment; install [requirements.txt](../requirements.txt).
-3. Verify CUDA if using GPU:
+2. **Ubuntu 24.04** minimal images often lack `venv` / `ensurepip`. If `python3 -m venv .venv` fails, run:
+   `sudo apt update && sudo apt install -y python3.12-venv` (or `python3-venv`), then remove any half-made `.venv` (`rm -rf .venv`) and create the venv again.
+3. Create a virtual environment; install [requirements.txt](../requirements.txt).
+4. Verify CUDA if using GPU:
 
    ```bash
    python -c "import torch; print(torch.cuda.is_available(), torch.version.cuda)"
    ```
 
-4. Sync or download your **training data** (S3, `git lfs`, Hugging Face `huggingface-cli`, etc.) — document the method in [RUNBOOK.md](RUNBOOK.md).
+5. Sync or download your **training data** (S3, `git lfs`, Hugging Face `hf auth login` / Hub API, etc.) — document the method in [RUNBOOK.md](RUNBOOK.md).
 
 ## Cost hygiene
 

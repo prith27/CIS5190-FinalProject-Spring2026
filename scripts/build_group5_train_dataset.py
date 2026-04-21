@@ -45,9 +45,16 @@ def _row_image_to_pil(img) -> Image.Image:
 
 
 def _collect_val_hashes() -> set[str]:
+    print(
+        "  Decoding val images for fingerprints (first Hub access can be slow — not frozen).",
+        file=sys.stderr,
+        flush=True,
+    )
     val = load_dataset(VAL_ID, split="train", streaming=True)
     hashes: set[str] = set()
-    for row in val:
+    for i, row in enumerate(val):
+        if i == 0 or (i + 1) % 25 == 0:
+            print(f"  val rows hashed: {i + 1}/~100", file=sys.stderr, flush=True)
         hashes.add(_png_sha256(_row_image_to_pil(row["image"])))
     return hashes
 
@@ -82,9 +89,13 @@ def main() -> int:
     parser.add_argument(
         "--shuffle-buffer-size",
         type=int,
-        default=8192,
+        default=1024,
         metavar="N",
-        help="Streaming shuffle buffer (>= train pool size ~3.4k gives better mix). Default: 8192",
+        help=(
+            "Streaming shuffle buffer. Large values (e.g. 8192) use more RAM — on small EC2 "
+            "instances the process may be OOM-killed ('Killed'). Default: 1024. "
+            "Raise to 2048–4096 only if you have spare memory."
+        ),
     )
     args = parser.parse_args()
 
@@ -142,7 +153,21 @@ def main() -> int:
         train_stream = train_stream.shuffle(
             seed=args.seed, buffer_size=args.shuffle_buffer_size
         )
+        scanned = 0
         for row in train_stream:
+            scanned += 1
+            if scanned == 1:
+                print(
+                    "  Train stream started (first batches can be slow).",
+                    file=sys.stderr,
+                    flush=True,
+                )
+            elif scanned % 500 == 0:
+                print(
+                    f"  train rows scanned: {scanned}, kept so far: {len(rows_out)}/{args.n}",
+                    file=sys.stderr,
+                    flush=True,
+                )
             pil = _row_image_to_pil(row["image"])
             h = _png_sha256(pil)
             if h in val_hashes:
