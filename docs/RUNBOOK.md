@@ -41,7 +41,7 @@ python scripts/build_group5_train_dataset.py --n 1500 --seed 51905 --out data/gr
 
 **First run still downloads image bytes** over the network when streaming; let the command **finish**. If you interrupt it, delete the broken output dir and run again.
 
-**Process ends with `Killed` (no Python traceback):** Usually the **Linux OOM killer** — streaming shuffle + image decode can use a lot of RAM. Try a **smaller** shuffle buffer, e.g. `python scripts/build_group5_train_dataset.py ... --shuffle-buffer-size 512`, or add **swap** on the instance (`sudo fallocate -l 8G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile`), or use an instance with **more memory**. Confirm with `dmesg -T | tail -20` (look for “Out of memory”).
+**Process ends with `Killed` (no Python traceback):** Usually **out of memory**. The builder streams train rows and should **write each JPEG as soon as a row is accepted** (so 2000 images are not all held in RAM). Still use a modest **`--shuffle-buffer-size`** (e.g. **512**), add **swap** on small instances, or upgrade RAM. `ps` showing **~15 GiB** for one Python process often meant an **older** script version that buffered all PIL images — **git pull** and re-run. Confirm OOM with `dmesg -T | tail -20`.
 
 Dedup rule: **SHA-256 of lossless RGB PNG bytes** per image; drop any train row whose hash appears in **`gydou/released_img`**. Document counts in the script’s `build_manifest.json`.
 

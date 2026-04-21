@@ -3,6 +3,9 @@
 
 Dedup: SHA-256 of RGB image encoded as PNG (lossless, stable per pixel grid).
 
+Accepted images are **written to JPEG immediately** so we do not hold thousands of PIL images in
+RAM (which can OOM a 16 GiB instance).
+
 **Default I/O:** `streaming=True` for the train pool so Hugging Face does **not** build a full
 Arrow cache (~many GB). Use ``--materialize`` only if you have enough free disk and want the
 classic map-style ``shuffle`` (repro order may differ from streaming shuffle).
@@ -107,11 +110,30 @@ def main() -> int:
     val_hashes = _collect_val_hashes()
     print(f"Val unique PNG hashes: {len(val_hashes)}", file=sys.stderr)
 
-    rows_out: list[dict] = []
+    # Metadata for each kept row (paths to on-disk JPEGs); do not store PIL in RAM.
+    rows_meta: list[dict] = []
     skipped_val_dup = 0
     skipped_train_dup = 0
     seen_train: set[str] = set()
     train_io = "materialized" if args.materialize else "streaming"
+
+    def _keep_one(
+        pil: Image.Image,
+        lat: float,
+        lon: float,
+        idx: int,
+    ) -> None:
+        fname = f"{idx:05d}.jpg"
+        fpath = img_dir / fname
+        pil.convert("RGB").save(fpath, format="JPEG", quality=92)
+        rows_meta.append(
+            {
+                "_idx": idx,
+                "path": str(fpath.resolve()),
+                "Latitude": lat,
+                "Longitude": lon,
+            }
+        )
 
     if args.materialize:
         print(
@@ -127,20 +149,21 @@ def main() -> int:
             h = _png_sha256(pil)
             if h in val_hashes:
                 skipped_val_dup += 1
+                del pil
                 continue
             if h in seen_train:
                 skipped_train_dup += 1
+                del pil
                 continue
             seen_train.add(h)
-            rows_out.append(
-                {
-                    "image": pil,
-                    "Latitude": float(row["Latitude"]),
-                    "Longitude": float(row["Longitude"]),
-                    "_idx": len(rows_out),
-                }
+            _keep_one(
+                pil,
+                float(row["Latitude"]),
+                float(row["Longitude"]),
+                len(rows_meta),
             )
-            if len(rows_out) >= args.n:
+            del pil
+            if len(rows_meta) >= args.n:
                 break
     else:
         print(
@@ -164,7 +187,7 @@ def main() -> int:
                 )
             elif scanned % 500 == 0:
                 print(
-                    f"  train rows scanned: {scanned}, kept so far: {len(rows_out)}/{args.n}",
+                    f"  train rows scanned: {scanned}, kept so far: {len(rows_meta)}/{args.n}",
                     file=sys.stderr,
                     flush=True,
                 )
@@ -172,25 +195,26 @@ def main() -> int:
             h = _png_sha256(pil)
             if h in val_hashes:
                 skipped_val_dup += 1
+                del pil
                 continue
             if h in seen_train:
                 skipped_train_dup += 1
+                del pil
                 continue
             seen_train.add(h)
-            rows_out.append(
-                {
-                    "image": pil,
-                    "Latitude": float(row["Latitude"]),
-                    "Longitude": float(row["Longitude"]),
-                    "_idx": len(rows_out),
-                }
+            _keep_one(
+                pil,
+                float(row["Latitude"]),
+                float(row["Longitude"]),
+                len(rows_meta),
             )
-            if len(rows_out) >= args.n:
+            del pil
+            if len(rows_meta) >= args.n:
                 break
 
-    if len(rows_out) < args.n:
+    if len(rows_meta) < args.n:
         print(
-            f"Warning: only collected {len(rows_out)} rows (requested {args.n}). "
+            f"Warning: only collected {len(rows_meta)} rows (requested {args.n}). "
             "Pool may be exhausted after dedup.",
             file=sys.stderr,
         )
@@ -200,14 +224,11 @@ def main() -> int:
     lons: list[float] = []
     meta_lines = ["file_name,Latitude,Longitude"]
 
-    for r in rows_out:
+    for r in rows_meta:
         idx = r["_idx"]
         fname = f"{idx:05d}.jpg"
-        fpath = img_dir / fname
-        rgb = r["image"].convert("RGB")
-        rgb.save(fpath, format="JPEG", quality=92)
         rel = f"images/{fname}"
-        paths.append(str(fpath.resolve()))
+        paths.append(r["path"])
         lats.append(r["Latitude"])
         lons.append(r["Longitude"])
         meta_lines.append(f"{rel},{r['Latitude']},{r['Longitude']}")
@@ -218,7 +239,7 @@ def main() -> int:
         "train_pool": TRAIN_POOL_ID,
         "val_reference": VAL_ID,
         "n_requested": args.n,
-        "n_output": len(rows_out),
+        "n_output": len(rows_meta),
         "shuffle_seed": args.seed,
         "train_io": train_io,
         "shuffle_buffer_size": (
@@ -234,7 +255,7 @@ def main() -> int:
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
 
-    print(f"Wrote {len(rows_out)} rows to {out}", file=sys.stderr)
+    print(f"Wrote {len(rows_meta)} rows to {out}", file=sys.stderr)
 
     if args.push_to_hub:
         features = Features(
