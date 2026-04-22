@@ -97,7 +97,7 @@ See [AWS_SETUP.md](AWS_SETUP.md) for launch and SSH. After Phase C, fill in:
 
 ## Phase C — ViT partial-freeze training
 
-Run from repo root on EC2:
+Run from repo root on EC2. The training script prepends the repo root to `sys.path` so `python training/run_train_vit.py` can import `training.augmentation` (plain `python training/...` otherwise only adds the `training/` folder to the path and breaks that import).
 
 ```bash
 source .venv/bin/activate
