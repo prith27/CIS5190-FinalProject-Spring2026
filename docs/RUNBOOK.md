@@ -183,21 +183,69 @@ Checksum after copy:
 shasum -a 256 artifacts/model.pt
 ```
 
-## Local evaluation (Project A)
+## Phase D — Local grader parity (`eval_project_a.py`)
+
+**1. Export** [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img) to `data/val_released_img/` (gitignored with other `data/*`):
 
 ```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-$(pwd)/.hf_cache/datasets}"
+export HF_HUB_CACHE="${HF_HUB_CACHE:-$(pwd)/.hf_cache/hub}"
+mkdir -p "$HF_DATASETS_CACHE" "$HF_HUB_CACHE"
+python scripts/export_released_img_for_eval.py --out data/val_released_img
+```
+
+**2. Run** the course-style evaluator (weights path may be `artifacts/model.pt`):
+
+```bash
+source .venv/bin/activate
 python project-resources/Img2GPS/eval_project_a.py \
   --model model.py \
   --preprocess preprocess.py \
-  --weights model.pt \
-  --csv path/to/val/metadata.csv \
+  --weights artifacts/model.pt \
+  --csv data/val_released_img/metadata.csv \
   --batch-size 32
 ```
 
-Expected output includes: `avg_distance_m`, `mae (deg)`, `rmse (deg)`, `avg_infer_ms`.
+Expected output includes: `avg_distance_m`, `mae (deg)`, `rmse (deg)`, `avg_infer_ms`. Log numbers in [RESULTS.md](RESULTS.md).
 
-## Hugging Face leaderboard
+**Note:** On macOS, if `torch==2.9.1` is not available for your Python, install the closest supported `torch` / `torchvision` pair for local smoke tests; EC2/grader should follow [BACKEND_ENV.md](BACKEND_ENV.md).
 
-TBD: exact UI steps or CLI for uploading `model.py`, `preprocess.py`, `model.pt` once course provides the workflow.
+## Phase E — Hugging Face leaderboard
 
-Record **Group ID** (**5**) and **Alias** in [SUBMISSION_LOG.md](SUBMISSION_LOG.md).
+The **exact** leaderboard URL, upload widget, and any **CLI** are defined by the course (Canvas, **Project_Submission.pdf**, staff announcement). Use those as the source of truth; the checklist below is generic.
+
+### Files to have ready (Project A)
+
+| File | Ready? | Notes |
+|------|--------|--------|
+| `model.py` | Yes | `get_model()`, `Model.predict` → raw degrees; norms in file match training. |
+| `preprocess.py` | Yes | `prepare_data(csv_path)` → `(X, y)` with `y` in raw degrees. |
+| `model.pt` | Yes | Same checkpoint you evaluated; path often `artifacts/model.pt` locally. |
+
+**Before upload:** run Phase D [eval](#phase-d--local-grader-parity-eval_project_a) one more time on `data/val_released_img` so the three files on disk are the set you mean to submit.
+
+### Upload (typical course flow)
+
+1. Log in to [Hugging Face](https://huggingface.co/) (team account or designated uploader).
+2. Open the **course leaderboard / submission** page from Canvas or the PDF.
+3. Enter **Group ID `5`** and your chosen **Alias** (often **best score is kept per alias** — pick a stable final name, e.g. `group5-img2gps-v1`).
+4. Upload **`model.py`**, **`preprocess.py`**, **`model.pt`** (names must match what the grader expects — usually exactly these).
+5. Submit and wait for the run to finish; note **mean Haversine (m)** when it appears.
+
+**Optional (CLI):** If staff publish a Hub repo or `huggingface-cli` / `hf` upload pattern, follow their snippet; otherwise use the web UI.
+
+### After submission — log and verify
+
+- Record **UTC time**, **alias**, **mean_haversine_m**, and **success/error** in [SUBMISSION_LOG.md](SUBMISSION_LOG.md) and the leaderboard table in [RESULTS.md](RESULTS.md).
+- If the run **fails**, read the error carefully: common issues are wrong file names, `model.pt` not loading (key mismatch), timeout, or missing dependency (must match [BACKEND_ENV.md](BACKEND_ENV.md)).
+- Re-download or re-export submitted `model.py` from Git if you fix bugs; **recompute `model.pt` SHA** if you change weights.
+
+### What to check if something breaks
+
+- [ ] `model.py` and `preprocess.py` are the same versions you tested with `eval_project_a.py`.
+- [ ] `LAT_MEAN`, `LAT_STD`, `LON_MEAN`, `LON_STD` match the training run that produced **`model.pt`**.
+- [ ] `model.pt` is the **full** ViT `state_dict` (not an empty or wrong checkpoint).
+- [ ] File size / upload completed (no truncated upload).
+- [ ] Only approved packages in submitted code paths ([BACKEND_ENV.md](BACKEND_ENV.md)).

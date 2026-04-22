@@ -59,6 +59,17 @@ Complete an entry **before closing each phase**. Second reviewer should scan **d
 
 ---
 
+## Phase D — 2026-04-22
+
+- **Reviewer(s):** TBD
+- [x] [RUNBOOK.md](RUNBOOK.md): Phase D export + `eval_project_a.py` commands
+- [x] [RESULTS.md](RESULTS.md): local eval **avg_distance_m 62.196** (N=100 exported `gydou/released_img`)
+- [x] [scripts/export_released_img_for_eval.py](../scripts/export_released_img_for_eval.py) added
+- [x] [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md): core I/O items checked post-verify
+- [ ] Phase E leaderboard rows / alias (pending)
+
+---
+
 ## Template for future phases
 
 ```markdown

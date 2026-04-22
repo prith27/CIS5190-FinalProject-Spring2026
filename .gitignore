@@ -26,6 +26,9 @@ __pycache__/
 /artifacts/*
 !/artifacts/.gitkeep
 
+# Local Hugging Face cache (optional; scripts may set HF_* to repo paths)
+.hf_cache/
+
 # Jupyter
 .ipynb_checkpoints/
 

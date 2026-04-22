@@ -11,7 +11,7 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 | A — Repo & docs | Complete |
 | B — Data & HF Dataset | **Complete** — team train: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) — [docs/DATA.md](docs/DATA.md), [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md) |
 | C — Train on AWS | **Implemented** — partial-freeze ViT-B/16 training pipeline at [training/run_train_vit.py](training/run_train_vit.py) |
-| D — `model.py` / `preprocess.py` + local eval | **Implemented** — submission files created and local evaluator sanity-checked |
+| D — `model.py` / `preprocess.py` + local eval | **Verified** — `eval_project_a.py` on exported `gydou/released_img` (~62.2 m); see [docs/RUNBOOK.md](docs/RUNBOOK.md), [docs/RESULTS.md](docs/RESULTS.md) |
 | E — HF leaderboard | TBD |
 | F — Report & optional video | TBD |
 
