@@ -18,14 +18,13 @@ __pycache__/
 .cursor/
 .cursor
 
-# Checkpoints (large) — track via SUBMISSION_LOG checksums; use Git LFS if you must version them
+# Checkpoints (large) — track SHA in SUBMISSION_LOG; use Git LFS if you must version weights
 *.pt
 *.pth
-artifacts/*.pt
-artifacts/*.pth
 
-# Keep artifacts dir
-!artifacts/.gitkeep
+# Training outputs under ./artifacts/ — do not push (keep folder via .gitkeep)
+/artifacts/*
+!/artifacts/.gitkeep
 
 # Jupyter
 .ipynb_checkpoints/

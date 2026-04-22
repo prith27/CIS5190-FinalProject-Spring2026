@@ -4,8 +4,13 @@
 - `X` is a list of model-ready tensors (C, H, W), normalized for ViT input
 - `y` is a list of raw `[lat, lon]` labels in decimal degrees
 
-This pipeline matches `training/augmentation.py -> build_eval_transforms()`:
-Resize(256) -> CenterCrop(224) -> ToTensor -> ImageNet normalization.
+Eval pipeline matches training validation and `training/augmentation.py` policy
+`group5_randa_m7` eval branch (`build_eval_transforms`): Resize(256) ->
+CenterCrop(224) -> ToTensor -> ImageNet normalization. Training-only augs are
+not applied here.
+
+Aligned with run **vit-b16-pf3-v1** (ViT-B/16, partial-freeze 3 blocks); see
+`docs/RESULTS.md` and `artifacts/train_log.txt` locally (not committed).
 """
 
 from __future__ import annotations

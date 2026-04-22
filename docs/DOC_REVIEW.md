@@ -55,7 +55,7 @@ Complete an entry **before closing each phase**. Second reviewer should scan **d
 - [x] REPORT_OUTLINE: Phase C methodology/evaluation text added
 - [x] Cross-check: README links updated for `model.py`, `preprocess.py`, and training script
 
-**Notes:** Implemented partial-freeze ViT Phase C pipeline (`training/run_train_vit.py`) plus submission files (`model.py`, `preprocess.py`) and a local evaluator sanity run with synthetic sample data.
+**Notes:** Implemented partial-freeze ViT Phase C pipeline (`training/run_train_vit.py`) plus submission files (`model.py`, `preprocess.py`). **Update:** vit-b16-pf3-v1 EC2 run logged in RESULTS; `model.py` norms from `artifacts/norm_stats.json`; `model.pt` SHA in SUBMISSION_LOG; `/artifacts/*` gitignored (keep `.gitkeep` only).
 
 ---
 

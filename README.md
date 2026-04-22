@@ -43,7 +43,7 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 
 ## Artifacts
 
-Store exported checkpoints under **`artifacts/`** (gitignored). Record checksums in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md). `model.pt` should be produced by `training/run_train_vit.py` and copied from EC2 as needed.
+Store exported checkpoints under **`artifacts/`** (directory is **gitignored** except `artifacts/.gitkeep`; do not push weights or logs). Record `model.pt` **SHA-256** in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md). Produce weights with `training/run_train_vit.py` on EC2 and `scp` locally as needed.
 
 ## Reproduce local eval (after Phase D)
 

@@ -29,9 +29,9 @@
 
 | File | Purpose | SHA-256 | Notes |
 |------|---------|---------|--------|
-| `model.pt` | Weights | TBD | Canonical checkpoint for leaderboard; produced by `training/run_train_vit.py` (`artifacts/model.pt`) |
-| `model.py` | Entry point | TBD | ViT-B/16 partial-freeze architecture; paste git commit hash here |
-| `preprocess.py` | `prepare_data` | TBD | Eval transforms: Resize(256) -> CenterCrop(224) -> ImageNet norm; paste git commit hash here |
+| `model.pt` | Weights | `3473d56ec0986c22bfc72fa97addf5428ed6f0a0a71c2d021e4a196f227c29a9` | vit-b16-pf3-v1; best val **62.176 m** (`gydou/released_img`). File is **gitignored**; keep a copy locally / upload to HF per course workflow. |
+| `model.py` | Entry point | `29fa0e4` | ViT-B/16 partial-freeze; `LAT_*` / `LON_*` match `artifacts/norm_stats.json`. |
+| `preprocess.py` | `prepare_data` | `29fa0e4` | Eval transforms aligned with `group5_randa_m7` eval path. |
 
 ## Leaderboard submissions
 
@@ -43,5 +43,5 @@
 
 ## Git
 
-- **Canonical commit for submission:** TBD
-- **Phase C training script commit (`training/run_train_vit.py`):** TBD
+- **Canonical commit for submission:** `29fa0e4` (update if you amend after further edits)
+- **Phase C training script commit (`training/run_train_vit.py`):** same tree as `29fa0e4` unless changed

@@ -5,9 +5,8 @@ Contract:
 - `Model()` is instantiable with no required arguments
 - `predict(batch)` returns a list of `[lat, lon]` pairs in raw decimal degrees
 
-Important:
-- Replace the normalization constants below with values printed by
-  `training/run_train_vit.py` for the exact checkpoint you submit.
+Train-set z-score stats (must match `training/run_train_vit.py` / `artifacts/norm_stats.json`
+for the submitted `model.pt`). Source: `prith27/cis5190-group5-train`.
 """
 
 from __future__ import annotations
@@ -20,11 +19,11 @@ import torch
 from torch import nn
 from torchvision.models import vit_b_16
 
-# Replace these with train-set stats from training/run_train_vit.py.
-LAT_MEAN = 0.0
-LAT_STD = 1.0
-LON_MEAN = 0.0
-LON_STD = 1.0
+# From artifacts/norm_stats.json (run vit-b16-pf3-v1, 2026-04-22).
+LAT_MEAN = 39.951561176300046
+LAT_STD = 0.0006491282736708259
+LON_MEAN = -75.19154781341553
+LON_STD = 0.0005868093627598868
 
 
 class Model(nn.Module):
