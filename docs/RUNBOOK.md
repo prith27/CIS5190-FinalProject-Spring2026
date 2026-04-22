@@ -214,7 +214,9 @@ Expected output includes: `avg_distance_m`, `mae (deg)`, `rmse (deg)`, `avg_infe
 
 ## Phase E — Hugging Face leaderboard
 
-The **exact** leaderboard URL, upload widget, and any **CLI** are defined by the course (Canvas, **Project_Submission.pdf**, staff announcement). Use those as the source of truth; the checklist below is generic.
+**Course Space (Project A — submit here):** [https://huggingface.co/spaces/cis4190/IMG2GPS](https://huggingface.co/spaces/cis4190/IMG2GPS) (duplicate of the reference `TUEN-YUE/IMG2GPS` template).
+
+If Canvas or **Project_Submission.pdf** names a different URL, follow the course; otherwise use the Space above.
 
 ### Files to have ready (Project A)
 
@@ -229,7 +231,7 @@ The **exact** leaderboard URL, upload widget, and any **CLI** are defined by the
 ### Upload (typical course flow)
 
 1. Log in to [Hugging Face](https://huggingface.co/) (team account or designated uploader).
-2. Open the **course leaderboard / submission** page from Canvas or the PDF.
+2. Open **[cis4190/IMG2GPS](https://huggingface.co/spaces/cis4190/IMG2GPS)** (or the URL Canvas/PDF specifies).
 3. Enter **Group ID `5`** and your chosen **Alias** (often **best score is kept per alias** — pick a stable final name, e.g. `group5-img2gps-v1`).
 4. Upload **`model.py`**, **`preprocess.py`**, **`model.pt`** (names must match what the grader expects — usually exactly these).
 5. Submit and wait for the run to finish; note **mean Haversine (m)** when it appears.

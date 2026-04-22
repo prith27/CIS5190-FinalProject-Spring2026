@@ -25,6 +25,7 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 | Commands (train, eval, upload) | [docs/RUNBOOK.md](docs/RUNBOOK.md) |
 | Experiment log | [docs/RESULTS.md](docs/RESULTS.md) |
 | HF submission / Group ID / Alias | [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md) |
+| **Project A leaderboard (submit)** | [cis4190/IMG2GPS Space](https://huggingface.co/spaces/cis4190/IMG2GPS) |
 | Grader I/O checklist | [docs/SUBMISSION_CHECKLIST.md](docs/SUBMISSION_CHECKLIST.md) |
 | Environment parity | [docs/BACKEND_ENV.md](docs/BACKEND_ENV.md) |
 | Report draft (5-page body) | [docs/REPORT_OUTLINE.md](docs/REPORT_OUTLINE.md) |
