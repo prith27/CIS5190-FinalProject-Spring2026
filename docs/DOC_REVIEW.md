@@ -30,14 +30,18 @@ Complete an entry **before closing each phase**. Second reviewer should scan **d
 
 ## Phase B plan locked — 2026-04-21
 
-- [DATA.md](DATA.md) **Phase B**: val = [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img); train = reproducible subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) + **dedup** + **train-only augmentation**; team HF publish TBD.
+- [DATA.md](DATA.md) **Phase B**: val = [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img); train = reproducible subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) + **dedup** + **train-only augmentation**; team HF: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) (**N=2000**, seed 51905).
 - Updated [README.md](../README.md), [RUNBOOK.md](RUNBOOK.md), [SUBMISSION_LOG.md](SUBMISSION_LOG.md), [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md), [REPORT_OUTLINE.md](REPORT_OUTLINE.md).
 
 ### Phase B implementation — 2026-04-21
 
 - **Aug policy** documented in [DATA.md](DATA.md): RandAugment + RandomErasing + geo-aware crop bounds; eval pipeline fixed; ablations (TrivialAugmentWide, simpler ColorJitter) noted.
 - Code: [`training/augmentation.py`](../training/augmentation.py), [`scripts/build_group5_train_dataset.py`](../scripts/build_group5_train_dataset.py); [RUNBOOK.md](RUNBOOK.md) commands.
-- [ ] Team still: run builder → publish HF train repo → fill [SUBMISSION_LOG.md](SUBMISSION_LOG.md) URL.
+- [x] Team **train** Hub: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) — [SUBMISSION_LOG.md](SUBMISSION_LOG.md) updated.
+
+### Phase B dataset published — 2026-04-21
+
+- **URL:** [https://huggingface.co/datasets/prith27/cis5190-group5-train](https://huggingface.co/datasets/prith27/cis5190-group5-train) (2k rows, seed 51905). README, DATA, SUBMISSION_LOG, RUNBOOK, RESULTS, REPORT_OUTLINE, SUBMISSION_CHECKLIST cross-links updated for Git push.
 
 ---
 

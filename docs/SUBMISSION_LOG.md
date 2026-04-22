@@ -15,8 +15,8 @@
 
 ## Hugging Face Dataset (team data)
 
-- **Team train subset (publish this):** TBD — required in report (derived from [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset); cite parent + seed + N + dedup)
-- **Revision / commit:** TBD
+- **Team train subset (publish this):** [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) — **2k** rows; **seed** `51905`; **dedup** SHA-256 PNG vs [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img); parent [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset). Built with [`scripts/build_group5_train_dataset.py`](../scripts/build_group5_train_dataset.py) on EC2. **Cite the parent** on the dataset card; **released_img not in train.**
+- **Revision / commit:** (fill after push) dataset repo `main`; Git commit that matches export script: TBD
 
 ### Reference datasets (do not confuse with team repo)
 

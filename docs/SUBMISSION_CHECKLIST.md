@@ -44,7 +44,7 @@ Use this before every Hugging Face upload. Sources: **Project_Submission.pdf**, 
 ## Training integrity
 
 - [ ] **[`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img)** is **not** in the training split (staff discourage training on it; Ed #348)
-- [ ] Train is a **deduplicated** subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) (document **seed** and **N**)
+- [x] Train is a **deduplicated** subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) — published: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) (**N=2000**, **seed=51905**; see [DATA.md](DATA.md) / [SUBMISSION_LOG.md](SUBMISSION_LOG.md))
 - [ ] **Official representative test sample** from the course PDF (§2.2), if separate from above, is **not** in training
 
 ## Local sanity check

@@ -166,19 +166,19 @@ Compatible with grader column aliases (see [Project_Submission.pdf](../Project_S
 | Split | Source | Rows (approx.) | Notes |
 |-------|--------|----------------|--------|
 | **Validation** | [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img) | ~100 | **Not** in train |
-| **Train** | Subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) | **N** (e.g. 1k–2k) | Seed + dedup documented |
+| **Train** | Subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) | **2000** (published) | `shuffle_seed=51905`, dedup vs val; [Hub: `prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) |
 
 ---
 
 ## Final dataset statistics
 
-TBD after Phase B: **N_train**, **N_val**, map / histogram of train lat-lon, aug policy version.
+**N_train = 2000** (Group 5); **N_val** = ~100 [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img). Optional: map / histogram in report. **Aug policy:** `group5_randa_m7` ([`training/augmentation.py`](../training/augmentation.py)); train-time only.
 
 ---
 
 ## Hugging Face Dataset (team publish)
 
-- **Train subset URL:** TBD — your team repo after push  
+- **Train subset URL:** [`https://huggingface.co/datasets/prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train)  
 - **Val reference:** [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img) (cite; do not re-host as “your train”)  
 - **Card:** parent **`5190-image-dataset`**, license, **seed**, **N**, **dedup**, aug summary
 

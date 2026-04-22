@@ -27,7 +27,7 @@ TBD (< 1 page): project highlights, model approach, key findings (core + explora
 Address **Final Project Descriptions** §2.1–2.2 and §2.4, plus **Ed #348**:
 
 - **Validation:** [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img) (~100) — **val / internal eval only**; **not** used in training.
-- **Training pool:** [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset); **your** published subset of size **N** with fixed **seed**, **dedup** vs val, optional bbox filter; **HF link** to **team** dataset repo.
+- **Training pool / published train:** Subset of [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) — team Hub: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) (**N=2000**, **seed=51905**, **dedup** vs val; optional bbox filter not used).
 - **Evaluation region:** Penn campus rectangle **33rd & Walnut** to **34th & Spruce** (Figure 1).
 - **Augmentation:** train-time only — **RandAugment** (moderate magnitude) + **RandomErasing** + conservative **RandomResizedCrop** + flip + light **GaussianBlur**; val **Resize(256) → CenterCrop(224)** + ImageNet norm (see [DATA.md](DATA.md)).
 - **Leakage / integrity:** document dedup; staff may use a **different** hidden test set for leaderboard.

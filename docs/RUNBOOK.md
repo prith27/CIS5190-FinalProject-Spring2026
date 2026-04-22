@@ -33,7 +33,7 @@ pip install -r requirements.txt
 python scripts/build_group5_train_dataset.py --n 1500 --seed 51905 --out data/group5_train
 ```
 
-**Where files go:** `data/group5_train/images/*.jpg`, `data/group5_train/metadata.csv`, `data/group5_train/build_manifest.json`.
+**Where files go:** `data/group5_train/images/*.jpg`, `data/group5_train/metadata.csv`, `data/group5_train/build_manifest.json`. Each image **appends** a row to `metadata.csv` as it is written (with flush), so a **partial** run still has **labels** for every file on disk — you can build a Hub push from that folder without re-streaming the parent dataset.
 
 **If the folder looks empty in Cursor/VS Code:** everything under `data/*` is **gitignored**, so some editors **hide** those paths in the file tree. The data is still on disk — confirm in Terminal: `ls -la data/group5_train/images | head`. You can toggle “exclude Git Ignore” / show ignored files in the explorer if your editor supports it.
 
@@ -66,7 +66,7 @@ python scripts/build_group5_train_dataset.py \
 
 Use **`--private`** if the Hub repo should stay private: append `--private` to the command above.
 
-4. **Record the URL** in [SUBMISSION_LOG.md](SUBMISSION_LOG.md) (e.g. `https://huggingface.co/datasets/YOUR_USERNAME/cis5190-group5-train`) and add a dataset card on the Hub citing the parent [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) and stating **`gydou/released_img` is not in train** (see [DATA.md](DATA.md)).
+4. **Record the URL** in [SUBMISSION_LOG.md](SUBMISSION_LOG.md). **Group 5 (published):** [`https://huggingface.co/datasets/prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train). The dataset card should cite the parent [`heidiywseo/5190-image-dataset`](https://huggingface.co/datasets/heidiywseo/5190-image-dataset) and state that **`gydou/released_img` is not in train** (see [DATA.md](DATA.md)).
 
 ### Load Hub datasets (Phase B)
 

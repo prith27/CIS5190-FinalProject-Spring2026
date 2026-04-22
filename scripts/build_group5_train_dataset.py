@@ -6,6 +6,9 @@ Dedup: SHA-256 of RGB image encoded as PNG (lossless, stable per pixel grid).
 Accepted images are **written to JPEG immediately** so we do not hold thousands of PIL images in
 RAM (which can OOM a 16 GiB instance).
 
+**`metadata.csv`** is **appended after each** saved image (flush + `fsync`) so a **crash** still
+leaves a **partial** but usable `images/*.jpg` + `metadata.csv` for manual Hub upload.
+
 **Default I/O:** `streaming=True` for the train pool so Hugging Face does **not** build a full
 Arrow cache (~many GB). Use ``--materialize`` only if you have enough free disk and want the
 classic map-style ``shuffle`` (repro order may differ from streaming shuffle).
@@ -18,6 +21,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from io import BytesIO
 from pathlib import Path
@@ -117,6 +121,10 @@ def main() -> int:
     seen_train: set[str] = set()
     train_io = "materialized" if args.materialize else "streaming"
 
+    metadata_csv = out / "metadata.csv"
+    metadata_csv.write_text("file_name,Latitude,Longitude\n", encoding="utf-8")
+    metadata_fp = open(metadata_csv, "a", encoding="utf-8", buffering=1)
+
     def _keep_one(
         pil: Image.Image,
         lat: float,
@@ -125,7 +133,14 @@ def main() -> int:
     ) -> None:
         fname = f"{idx:05d}.jpg"
         fpath = img_dir / fname
+        rel = f"images/{fname}"
         pil.convert("RGB").save(fpath, format="JPEG", quality=92)
+        metadata_fp.write(f"{rel},{lat},{lon}\n")
+        metadata_fp.flush()
+        try:
+            os.fsync(metadata_fp.fileno())
+        except OSError:
+            pass
         rows_meta.append(
             {
                 "_idx": idx,
@@ -219,21 +234,15 @@ def main() -> int:
             file=sys.stderr,
         )
 
+    metadata_fp.close()
+
     paths: list[str] = []
     lats: list[float] = []
     lons: list[float] = []
-    meta_lines = ["file_name,Latitude,Longitude"]
-
     for r in rows_meta:
-        idx = r["_idx"]
-        fname = f"{idx:05d}.jpg"
-        rel = f"images/{fname}"
         paths.append(r["path"])
         lats.append(r["Latitude"])
         lons.append(r["Longitude"])
-        meta_lines.append(f"{rel},{r['Latitude']},{r['Longitude']}")
-
-    (out / "metadata.csv").write_text("\n".join(meta_lines) + "\n", encoding="utf-8")
 
     manifest = {
         "train_pool": TRAIN_POOL_ID,

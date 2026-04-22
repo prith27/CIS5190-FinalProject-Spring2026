@@ -9,7 +9,7 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 | Phase | Status |
 |-------|--------|
 | A — Repo & docs | Complete |
-| B — Data & HF Dataset | In progress — [docs/DATA.md](docs/DATA.md) (dedup script: `scripts/build_group5_train_dataset.py`; aug: `training/augmentation.py`; Hub URL in [SUBMISSION_LOG](docs/SUBMISSION_LOG.md) when published) |
+| B — Data & HF Dataset | **Complete** — team train: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) — [docs/DATA.md](docs/DATA.md), [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md) |
 | C — Train on AWS | TBD |
 | D — `model.py` / `preprocess.py` + local eval | TBD |
 | E — HF leaderboard | TBD |
@@ -20,6 +20,7 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 | Resource | Location |
 |----------|----------|
 | Data protocol & HF Dataset URL | [docs/DATA.md](docs/DATA.md) |
+| **Team train dataset (Hub)** | [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) |
 | AWS EC2 setup | [docs/AWS_SETUP.md](docs/AWS_SETUP.md) |
 | Commands (train, eval, upload) | [docs/RUNBOOK.md](docs/RUNBOOK.md) |
 | Experiment log | [docs/RESULTS.md](docs/RESULTS.md) |
