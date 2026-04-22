@@ -45,6 +45,20 @@ Complete an entry **before closing each phase**. Second reviewer should scan **d
 
 ---
 
+## Phase C — 2026-04-22
+
+- **Reviewer(s):** TBD
+- [x] All docs touched by this phase updated
+- [x] RUNBOOK: training + resume + export commands documented
+- [x] RESULTS: experiment row added with run id, units, and notes
+- [x] SUBMISSION_LOG: artifact rows clarified for model/model.pt/preprocess metadata
+- [x] REPORT_OUTLINE: Phase C methodology/evaluation text added
+- [x] Cross-check: README links updated for `model.py`, `preprocess.py`, and training script
+
+**Notes:** Implemented partial-freeze ViT Phase C pipeline (`training/run_train_vit.py`) plus submission files (`model.py`, `preprocess.py`) and a local evaluator sanity run with synthetic sample data.
+
+---
+
 ## Template for future phases
 
 ```markdown

@@ -29,9 +29,9 @@
 
 | File | Purpose | SHA-256 | Notes |
 |------|---------|---------|--------|
-| `model.pt` | Weights | TBD | Canonical checkpoint for leaderboard |
-| `model.py` | Entry point | TBD | Git commit hash preferred |
-| `preprocess.py` | `prepare_data` | TBD | |
+| `model.pt` | Weights | TBD | Canonical checkpoint for leaderboard; produced by `training/run_train_vit.py` (`artifacts/model.pt`) |
+| `model.py` | Entry point | TBD | ViT-B/16 partial-freeze architecture; paste git commit hash here |
+| `preprocess.py` | `prepare_data` | TBD | Eval transforms: Resize(256) -> CenterCrop(224) -> ImageNet norm; paste git commit hash here |
 
 ## Leaderboard submissions
 
@@ -44,3 +44,4 @@
 ## Git
 
 - **Canonical commit for submission:** TBD
+- **Phase C training script commit (`training/run_train_vit.py`):** TBD

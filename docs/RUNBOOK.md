@@ -92,12 +92,78 @@ pip install -r requirements.txt
 See [AWS_SETUP.md](AWS_SETUP.md) for launch and SSH. After Phase C, fill in:
 
 - Git commit hash used on the instance: TBD
-- Exact training command or notebook cells: TBD
-- How `model.pt` was copied off the instance: TBD
+- Exact training command or notebook cells: see "Phase C — ViT partial-freeze training" below
+- How `model.pt` was copied off the instance: `scp` command below
+
+## Phase C — ViT partial-freeze training
+
+Run from repo root on EC2:
+
+```bash
+source .venv/bin/activate
+python training/run_train_vit.py \
+  --hf-train prith27/cis5190-group5-train \
+  --hf-val gydou/released_img \
+  --epochs 20 \
+  --batch-size 32 \
+  --lr 1e-3 \
+  --backbone-lr 1e-5 \
+  --unfreeze-blocks 3 \
+  --amp \
+  --output-dir artifacts \
+  --num-workers 4 2>&1 | tee artifacts/train_log.txt
+```
+
+Resume after interruption:
+
+```bash
+source .venv/bin/activate
+python training/run_train_vit.py \
+  --hf-train prith27/cis5190-group5-train \
+  --hf-val gydou/released_img \
+  --epochs 20 \
+  --batch-size 32 \
+  --lr 1e-3 \
+  --backbone-lr 1e-5 \
+  --unfreeze-blocks 3 \
+  --amp \
+  --output-dir artifacts \
+  --num-workers 4 \
+  --resume artifacts/latest_checkpoint.pt
+```
+
+Training script startup prints train label normalization stats to copy into `model.py`:
+
+```text
+LAT_MEAN=...
+LAT_STD=...
+LON_MEAN=...
+LON_STD=...
+```
+
+Try `--unfreeze-blocks 0`, `3`, and `6` for quick ablations (record in RESULTS).
 
 ## Export checkpoint
 
-TBD: path to canonical `model.pt` and how it was produced.
+Canonical output path from training script:
+
+- `artifacts/latest_checkpoint.pt` (every epoch, full training state)
+- `artifacts/best_model.pt` (best val Haversine)
+- `artifacts/model.pt` (state_dict exported for submission)
+
+Copy to local machine:
+
+```bash
+scp -i ~/.ssh/cis5190_aws \
+  ubuntu@<PUBLIC_DNS_OR_IP>:~/CIS5190_FinalProj/artifacts/model.pt \
+  ./artifacts/model.pt
+```
+
+Record checksum:
+
+```bash
+shasum -a 256 artifacts/model.pt
+```
 
 ## Local evaluation (Project A)
 

@@ -10,8 +10,8 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 |-------|--------|
 | A — Repo & docs | Complete |
 | B — Data & HF Dataset | **Complete** — team train: [`prith27/cis5190-group5-train`](https://huggingface.co/datasets/prith27/cis5190-group5-train) — [docs/DATA.md](docs/DATA.md), [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md) |
-| C — Train on AWS | TBD |
-| D — `model.py` / `preprocess.py` + local eval | TBD |
+| C — Train on AWS | **Implemented** — partial-freeze ViT-B/16 training pipeline at [training/run_train_vit.py](training/run_train_vit.py) |
+| D — `model.py` / `preprocess.py` + local eval | **Implemented** — submission files created and local evaluator sanity-checked |
 | E — HF leaderboard | TBD |
 | F — Report & optional video | TBD |
 
@@ -29,6 +29,9 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 | Environment parity | [docs/BACKEND_ENV.md](docs/BACKEND_ENV.md) |
 | Report draft (5-page body) | [docs/REPORT_OUTLINE.md](docs/REPORT_OUTLINE.md) |
 | Phase doc audits | [docs/DOC_REVIEW.md](docs/DOC_REVIEW.md) |
+| Phase C training script | [training/run_train_vit.py](training/run_train_vit.py) |
+| Submission model entrypoint | [model.py](model.py) |
+| Submission preprocess entrypoint | [preprocess.py](preprocess.py) |
 
 ## Course resources (local copies)
 
@@ -40,7 +43,7 @@ Predict **latitude and longitude** (decimal degrees) from an image. This reposit
 
 ## Artifacts
 
-Store exported checkpoints under **`artifacts/`** (gitignored). Record checksums in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md).
+Store exported checkpoints under **`artifacts/`** (gitignored). Record checksums in [docs/SUBMISSION_LOG.md](docs/SUBMISSION_LOG.md). `model.pt` should be produced by `training/run_train_vit.py` and copied from EC2 as needed.
 
 ## Reproduce local eval (after Phase D)
 
