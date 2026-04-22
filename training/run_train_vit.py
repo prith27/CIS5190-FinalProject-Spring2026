@@ -61,6 +61,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--num-workers", type=int, default=4, help="DataLoader workers")
     p.add_argument("--seed", type=int, default=51905, help="Global random seed")
     p.add_argument("--val-every", type=int, default=1, help="Run validation every N epochs")
+    p.add_argument(
+        "--amp",
+        action="store_true",
+        help="Optional: AMP is already the default on CUDA; this flag is accepted for convenience",
+    )
     p.add_argument("--no-amp", action="store_true", help="Disable mixed precision")
     p.add_argument("--resume", type=str, default="", help="Path to checkpoint to resume from")
     p.add_argument("--output-dir", type=str, default="artifacts", help="Directory for logs/checkpoints")
