@@ -183,6 +183,28 @@ Checksum after copy:
 shasum -a 256 artifacts/model.pt
 ```
 
+### Training curves for the report (matplotlib)
+
+From repo root, after `artifacts/train_log.txt` exists (e.g. copied from EC2):
+
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt   # includes matplotlib
+python scripts/plot_train_log.py --log artifacts/train_log.txt --out artifacts/plots
+```
+
+Writes PNGs under `artifacts/plots/` (e.g. `train_loss.png`, `val_haversine_m.png`). The ViT trainer logs **val Haversine (m)** and **train MSE** per epoch; it does not print a separate **val MSE** line — use **val_haversine_m** as the main validation curve for localization.
+
+**Sharing with collaborators (GitHub):** [`.gitignore`](../.gitignore) tracks **`artifacts/plots/**`**, **`artifacts/train_log.txt`**, and **`artifacts/norm_stats.json`** so you can commit and push them. **`*.pt` / `*.pth` stay ignored** (too large for normal GitHub; use SCP, HF, or Git LFS if you truly need weights in git).
+
+```bash
+git add artifacts/plots artifacts/train_log.txt artifacts/norm_stats.json scripts/plot_train_log.py
+git commit -m "Add training plots and ViT logs for collaborators"
+git push
+```
+
+After pulling, teammates regenerate plots anytime with `python scripts/plot_train_log.py` if `train_log.txt` updates.
+
 ## Phase D — Local grader parity (`eval_project_a.py`)
 
 **1. Export** [`gydou/released_img`](https://huggingface.co/datasets/gydou/released_img) to `data/val_released_img/` (gitignored with other `data/*`):

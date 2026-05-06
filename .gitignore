@@ -22,12 +22,18 @@ __pycache__/
 *.pt
 *.pth
 
-# Training outputs under ./artifacts/ — do not push (keep folder via .gitkeep)
+# Training outputs under ./artifacts/ — mostly local; small shareable files/plots are allowlisted below
 /artifacts/*
 !/artifacts/.gitkeep
+# Report assets + logs for collaborators (PNGs are small; *.pt remains ignored above)
+!/artifacts/plots/
+!/artifacts/plots/**
+!/artifacts/train_log.txt
+!/artifacts/norm_stats.json
 
 # Local Hugging Face cache (optional; scripts may set HF_* to repo paths)
 .hf_cache/
+.mpl_config/
 
 # Jupyter
 .ipynb_checkpoints/

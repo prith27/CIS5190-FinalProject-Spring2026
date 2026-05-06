@@ -9,3 +9,4 @@ opencv-python
 datasets
 huggingface_hub
 Pillow
+matplotlib
